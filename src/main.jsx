@@ -10,6 +10,10 @@ import {
 import AddCoffee from './componets/AddCoffee.jsx';
 import UpdateCoffee from './componets/UpdateCoffee.jsx';
 import EditCoffee from './componets/EditCoffee.jsx';
+import SignUp from './componets/SignUp.jsx';
+import SignIn from './componets/SignIn.jsx';
+import AuthProvider from './providers/AuthProvider.jsx';
+import Users from './componets/Users.jsx';
 
 
 const router = createBrowserRouter([
@@ -25,17 +29,32 @@ const router = createBrowserRouter([
   {
     path: 'updateCoffee/:id',
     element: <UpdateCoffee></UpdateCoffee>,
-    loader: ({params}) => fetch(`http://localhost:5000/coffee/${params.id}`)
+    loader: ({ params }) => fetch(`http://localhost:5000/coffee/${params.id}`)
   },
   {
     path: 'editCoffee/:id',
     element: <EditCoffee></EditCoffee>,
-    loader: ({params}) => fetch(`http://localhost:5000/coffee/${params.id}`)
+    loader: ({ params }) => fetch(`http://localhost:5000/coffee/${params.id}`)
+  },
+  {
+    path: '/signup',
+    element: <SignUp></SignUp>
+  },
+  {
+    path: 'signin',
+    element: <SignIn></SignIn>
+  },
+  {
+    path: '/users',
+    element: <Users></Users>,
+    loader: () => fetch('http://localhost:5000/user')
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>,
 )
